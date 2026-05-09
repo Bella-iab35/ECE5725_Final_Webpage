@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<title>ECE 4760 Final Project</title>
+
+<body>
+
+<div class="topnav">
+  <a href="index.html">Introduction</a>
+  <a class="active" href="design.html">Design</a>
+  <a href="results.html">Testing and Results</a>
+  <a href="conclusions.html">Conclusions</a>
+  <a href="appendix.html">Appendix</a>
+</div>
+
+<div class="top">
+    <h1>Design</h1>
+</div>
+
+<hr>
+
+<main>
+
+<div class="tab-wrap">
+
+
+    <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+    <label for="tab1">High Level Design</label>
+
+    <input type="radio" id="tab2" name="tabGroup1" class="tab">
+    <label for="tab2">Parts List</label>
+
+    <input type="radio" id="tab3" name="tabGroup1" class="tab">
+    <label for="tab3">Iterative Design Process</label>
+
+    <input type="radio" id="tab4" name="tabGroup1" class="tab">
+    <label for="tab4">Challenges and Solutions</label>
+
+    <div class="tab__content">
+      <p>
+        The system has two pieces. The pen itself uses a Raspberry Pi Zero 2 W, which is small enough to fit inside a handheld 3D-printed shell. Inside the pen we have an APDS-9999 color sensor at the tip, an SSD1306 OLED screen that gives the user feedback during a scan, a momentary push button that triggers the scan, and a ring of white LEDs around the sensor to light up the surface being scanned. There was also the plan of a removable cone over the tip that holds the LED light strip and blocks ambient light when the user wants a more "true" reading, or can be left off when the user wants to capture the color as it appears in the current lighting; unfortunately, this part had to be removed before our demo as it was causing issues in the color accuracy.
+        The base station is a Raspberry Pi 4. The Pi 4 runs a Python program written with Flask that does two things at the same time: it serves the web dashboard, and it listens for Bluetooth data coming from the pen. Both of these run in parallel using Python's threading module so they don't block each other.
+        When the user presses the button on the pen, the Zero 2W starts a 7-second scan window. During this window, the OLED plays an eyedropper animation so the user knows the device is working and not frozen. The sensor reads RGB values continuously during the window, and at the end the most recent reading gets calibrated, packaged into a JSON string, and sent over Bluetooth RFCOMM channel 1 to the Pi 4. The Pi 4 receives it, does all the color math, and updates a global variable that the dashboard reads from. The dashboard polls the server once per second, so within a second of receiving the data, every connected device shows the new color.
+      </p>
+    </div>
+
+    <div class="tab__content">
+    </div>  
+
+    <div class="tab__content">
+    
+    </div>
+
+</div>
+
+</main>
+
+</body>
+
+</html>

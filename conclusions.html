@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<title>ECE 5725 Final Project</title>
+
+<body>
+    
+    <div class="topnav">
+      <a href="index.html">Introduction</a>
+      <a href="design.html">Design</a>
+      <a href="results.html">Testing and Results</a>
+      <a class="active" href="conclusions.html">Conclusions</a>
+      <a href="appendix.html">Appendix</a>
+    </div>
+
+<div class="top">
+    <h1>Conclusions</h1>
+</div>
+
+<hr>
+
+<main>
+
+
+<div class="conclusions">
+    <p>
+    What worked well: separating the pen and the base station turned out to be the right architecture choice. The Pi Zero 2 W in pen form is constrained on power and processing, so offloading the color math, database lookup, and file generation to the Pi 4 kept the pen lightweight. The threading model on the Pi 4 worked cleanly: Bluetooth and Flask coexisted without interfering with each other, and the Bluetooth listener handled disconnections gracefully. The 30,000-color name database gave us much more meaningful results than a small hardcoded list would have. Writing the ASE format manually instead of relying on a library was more work upfront but gave us a stable, predictable output.
+    What didn't work as expected: software calibration alone wasn't enough to fix the color readings; even after white balance, we needed an additional saturation transform to suppress channel cross-talk. This is a workaround, not a real fix. A proper colorimetric calibration would require a Macbeth reference card and a matrix correction step, which we didn't have the hardware or time for. Cornell's network policies were also a constant obstacle. Eduroam and the main campus network both have restrictions that block device-to-device traffic, so we couldn't always count on wifi to work for multi-device demos. 
+    </p>
+</div>
+
+</main>
+
+</body>
+
+</html>
