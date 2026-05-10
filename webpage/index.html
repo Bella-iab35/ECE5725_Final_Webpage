@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+ <meta name="referrer" content="strict-origin-when-cross-origin">
+ <title>ECE 5725 Final Project</title>
+</head>
+<body>
+
+<div class="topnav">
+  <a class="active" href="index.html">Introduction</a>
+  <a href="design.html">Design and Testing</a>
+  <a href="results.html">Results</a>
+  <a href="conclusions.html">Conclusions</a>
+  <a href="appendix.html">Appendix</a>
+</div>
+
+<div class="top">
+    <h1>ECE 5725 Final Project</h1>
+    <h2>By Bella Barhorst (iab35) and Ayushi Raina (ar929)</h2>
+</div>
+
+<hr>
+
+<main>
+
+<div class="tab-wrap">
+
+    <!-- active tab on page load gets checked attribute -->
+    <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+    <label class="tab-label1" for="tab1">Introduction</label>
+
+    <input type="radio" id="tab2" name="tabGroup1" class="tab">
+    <label class="tab-label2" for="tab2">Project Overview</label>
+
+    <input type="radio" id="tab3" name="tabGroup1" class="tab">
+    <label class="tab-label3" for="tab3">Project Video</label>
+
+
+    <div class="tab__content">
+
+        <h2>Introduction</h2>
+        <i>
+            
+        </i>
+        <p>
+            For a designer, the physical world often is the main source of inspiration or references for them, including colors. Illustrators, painters, web designers, and even product manufacturers may come across that perfect color on fabric, a flower, a wall, or many other surfaces that they may want to use for their next piece, but how are they do capture that color perfectly? They could take a photo on their phone, but phone cameras may shift the color depending on lighting and white balance, and the designer will have to find that exact pixel within the photo after importing it into their chosen design program. There are tools on the market known as display colorimeters, or calibrators, that are made to help measure emitted light from surfaces of interest; however, this device ranges from $60 for a mini colorimeter with inconsistent measurements to $300+ for more accurate colorimeters. These tools then become a luxury rather than a useful tool for most artists that already are emptying their wallets for program subscriptions and other tools on top of their needs. This then leaves guessing the color by eye, which isn't accurate as the human eye may not read the color accurately either due to lighting, the colors it sits against, and any visual impairments the designer may have. 
+        </p>
+        <p>
+        This lead to the idea of our color picker pen: a small handheld device that you press against an object, push a button, and get the color on screen along with all the values designers actually use, hex code, RGB, CMYK, and the closest named color. The device sends the data wirelessly to a base station, which serves a web page anyone on the same network can pull up on their phone or laptop. From the dashboard, the user can save colors to a palette and export it as an image or as an Adobe Swatch Exchange file that opens directly in design software. It would help find that exact color while being on the less expensive side, only being a tad expensive due to the Pi. Also it can help those with visual impairments, especially colorblindness, to know what color they may be looking at. 
+        </p>
+    </div>
+
+    <div class="tab__content">
+        <h2>Project Overview</h2>
+        <p>
+            We set out to build a working color scanning pen with a base station that hosts a real-time web dashboard. The pen reads the color of whatever surface it's pressed against, sends the values over Bluetooth to the base station, and the base station does all the math and serves the dashboard. 
+        </p>
+        <img src="images/Colorimeter Diagram.png" alt="System diagram" class="center">
+        <p style="text-align:center;font-size:0.8em;">System overview diagram</p>
+        <p>    
+            By the end of the project, the system needed to scan colors with reasonable accuracy, display all the relevant color information on a live page, let users build and edit palettes, and export those palettes in two formats designers actually use. We met most of these goals, including a QR code feature that lets multiple devices view the dashboard at once.
+        </p>
+    </div>
+
+    <div class="tab__content">
+        <h2>Project Video</h2>
+        <p>
+           
+        </p>
+        <iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/et91Gea6CPk" title="Glorious to View" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+</div>
+
+</main>
+
+</body>
+
+</html>

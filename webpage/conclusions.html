@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<title>ECE 5725 Final Project</title>
+
+<body>
+    
+    <div class="topnav">
+      <a href="index.html">Introduction</a>
+      <a href="design.html">Design and Testing</a>
+      <a href="results.html">Results</a>
+      <a class="active" href="conclusions.html">Conclusions</a>
+      <a href="appendix.html">Appendix</a>
+    </div>
+
+<div class="top">
+    <h1>Conclusions</h1>
+</div>
+
+<hr>
+
+<main>
+
+
+<div class="conclusions">
+    <p>
+    <b>What worked well:</b> separating the pen and the base station turned out to be the right architecture choice. The Pi Zero 2W in pen form is constrained on power and processing, so offloading the color math, database lookup, and file generation to the Pi 4 kept the pen lightweight. The threading model on the Pi 4 worked cleanly: Bluetooth and Flask coexisted without interfering with each other, and the Bluetooth listener handled disconnections gracefully. The 30,000-color name database gave us much more meaningful results than a small hardcoded list would have. Writing the ASE format manually instead of relying on a library was more work upfront but gave us a stable, predictable output.
+    </p>
+     <p>
+    <b>What didn't work as expected:</b> software calibration alone wasn't enough to fix the color readings; even after white balance, we needed an additional saturation transform to suppress channel cross-talk. This is a workaround, not a real fix. A proper colorimetric calibration would require a Macbeth reference card and a matrix correction step, which we didn't have the hardware or time for. Cornell's network policies were also a constant obstacle. Eduroam and the main campus network both have restrictions that block device-to-device traffic, so we couldn't always count on wifi to work for multi-device demos. 
+    </p>
+     <p>
+    There are several directions we'd take this if we had more time. Persisting the palette to disk would prevent it from being wiped if the Pi 4 reboots; currently the palette only lives in memory. Adding a proper Macbeth ColorChecker calibration step would give us scientifically meaningful color accuracy instead of the heuristic transform we use now. The canvas drawing feature was prototyped but not fully integrated, and finishing it would let users sketch directly with their saved palette as a brush. We'd also like to add a battery indicator on the OLED so users know when the pen needs to be charged, and a way to sync palettes across devices via a cloud service in case the user wasn’t using the website on the same device that they would utilize the palette. Smaller improvements include click-to-copy on the hex code, keyboard shortcuts for power users, and custom adjustment sliders in the edit modal to tweak hue, saturation, and lightness independently as on the Raspberry Pi, the color selection input wasn’t as detailed as it was shown on other systems such as Bella’s Macbook (where there were extra sliders and more choices in color modes).
+    </p>
+</div>
+
+
+</main>
+
+</body>
+
+</html>

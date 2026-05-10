@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<title>ECE 5725 Final Project</title>
+
+<body>
+    
+<div class="topnav">
+  <a href="index.html">Introduction</a>
+  <a href="design.html">Design and Testing</a>
+  <a class="active" href="results.html">Results</a>
+  <a href="conclusions.html">Conclusions</a>
+  <a href="appendix.html">Appendix</a>
+</div>
+
+<div class="top">
+    <h1>Results</h1>
+</div>
+
+<hr>
+
+<main>
+
+<div class="results">
+  <p>The system works as designed. End-to-end latency from button press to dashboard update is around 7-8 seconds, almost all of which is the deliberate sensor integration window paired with the OLED animation. The actual Bluetooth round-trip takes under 100 milliseconds. The closest-color-name lookup runs in about 50 milliseconds even with 30,000 entries to compare against.
+    After calibration, scans land in the right general hue family. Reds scan as reds, blues scan as blues, greens scan as greens. The exact RGB values aren't always perfectly accurate compared to professional colorimetry; that would require a 3x3 calibration matrix derived from a Macbeth ColorChecker but the results are good enough that designers can recognize and use the colors that come out.
+    The dashboard updates correctly across multiple devices simultaneously. We tested with two phones and a laptop all connected to the same network, and all three showed the new color within a second of the pen scanning. The export features work as expected: the JPG file looks like a designer reference sheet with all the hex codes and names labeled, and the ASE file opens correctly in Photoshop and Illustrator.
+    We met our original goals: live wireless color capture, real-time multi-device dashboard, palette construction with editing and deletion, and export to two industry formats.
+  </p>
+</div>
+
+</main>
+
+</body>
+
+</html>
