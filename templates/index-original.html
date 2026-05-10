@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorPen</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; padding: 20px; }
+    h1 { font-size: 1.5rem; margin-bottom: 20px; }
+    h2 { font-size: 1rem; margin-bottom: 12px; color: #555; }
+
+    /* Current color section */
+    #color-preview {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      background: rgb(0, 0, 0);
+      transition: background 0.4s;
+    }
+    #color-info { margin-bottom: 20px; }
+    #color-info p { margin-bottom: 6px; font-size: 0.95rem; }
+
+    /* Complementary + analogous swatches (clickable to add to palette) */
+    .swatch-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .swatch {
+      flex: 1;
+      height: 60px;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-end;
+      padding: 6px;
+      font-size: 0.75rem;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .swatch:hover {
+      transform: scale(1.03);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Palette */
+    #palette-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .palette-swatch {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .palette-swatch:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .btn-primary { background: #333; color: white; }
+    .btn-secondary { background: #ddd; color: #333; }
+    .btn-danger { background: #e74c3c; color: white; }
+
+    section { margin-bottom: 28px; }
+
+    .hint { font-size: 0.8rem; color: #888; margin-top: 4px; }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <h1>ColorPen</h1>
+
+  <!-- Current scanned color -->
+  <section>
+    <h2>Current color</h2>
+    <div id="color-preview"></div>
+    <div id="color-info">
+      <p><strong>Name:</strong> <span id="name">—</span></p>
+      <p><strong>Hex:</strong> <span id="hex">—</span></p>
+      <p><strong>RGB:</strong> <span id="rgb">—</span></p>
+      <p><strong>CMYK:</strong> <span id="cmyk">—</span></p>
+    </div>
+    <button class="btn btn-primary" onclick="saveColor()">Save to palette</button>
+  </section>
+
+  <!-- Complementary and analogous colors -->
+  <section>
+    <h2>Related colors</h2>
+    <div class="swatch-row">
+      <div class="swatch" id="comp-swatch" onclick="saveRelated('complementary')" title="Click to add to palette">Complementary</div>
+      <div class="swatch" id="analogous-1" onclick="saveRelated('analogous_1')" title="Click to add to palette">Analogous 1</div>
+      <div class="swatch" id="analogous-2" onclick="saveRelated('analogous_2')" title="Click to add to palette">Analogous 2</div>
+    </div>
+    <p class="hint">Click any related color to add it to your palette.</p>
+  </section>
+
+  <!-- Saved palette -->
+  <section>
+    <h2>Palette</h2>
+    <div id="palette-row"></div>
+    <p class="hint">Click any palette swatch to remove it.</p>
+    <button class="btn btn-secondary" onclick="exportJPG()">Export .jpg</button>
+    <button class="btn btn-secondary" onclick="exportASE()">Export .ase</button>
+    <button class="btn btn-danger" onclick="clearPalette()">Clear palette</button>
+  </section>
+
+  <!-- QR code for sharing during demo -->
+  <section>
+    <h2>Share</h2>
+    <p class="hint">Scan this QR code with your phone to view this page on your device.</p>
+    <div id="qr-container" style="background: white; padding: 12px; border-radius: 12px; display: inline-block; margin-top: 8px;"></div>
+    <p id="qr-url" class="hint" style="margin-top: 8px; font-family: monospace;"></p>
+  </section>
+
+  <script>
+    // Poll the Pi 4 for the latest color every second
+    setInterval(fetchColor, 1000);
+
+    function fetchColor() {
+      fetch("/color")
+        .then(res => res.json())
+        .then(data => updateUI(data));
+    }
+
+    function updateUI(data) {
+      const { r, g, b, hex, cmyk, complementary, analogous } = data;
+
+      // Update color preview
+      document.getElementById("color-preview").style.background = `rgb(${r},${g},${b})`;
+
+      // Update color info
+      document.getElementById("name").textContent = data.name;
+      document.getElementById("hex").textContent = `#${hex}`;
+      document.getElementById("rgb").textContent = `${r}, ${g}, ${b}`;
+      document.getElementById("cmyk").textContent =
+        `C:${cmyk.c}% M:${cmyk.m}% Y:${cmyk.y}% K:${cmyk.k}%`;
+
+      // Update related color swatches
+      const comp = complementary;
+      document.getElementById("comp-swatch").style.background =
+        `rgb(${comp.r},${comp.g},${comp.b})`;
+
+      analogous.forEach((a, i) => {
+        document.getElementById(`analogous-${i + 1}`).style.background =
+          `rgb(${a.r},${a.g},${a.b})`;
+      });
+    }
+
+    function saveColor() {
+      fetch("/save_color", { method: "POST" })
+        .then(res => res.json())
+        .then(data => updatePalette(data.palette));
+    }
+
+    function saveRelated(which) {
+      fetch(`/save_related/${which}`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => updatePalette(data.palette));
+    }
+
+    function updatePalette(palette) {
+      const row = document.getElementById("palette-row");
+      row.innerHTML = "";
+      palette.forEach((c, index) => {
+        const div = document.createElement("div");
+        div.className = "palette-swatch";
+        div.style.background = `rgb(${c.r},${c.g},${c.b})`;
+        div.title = `#${c.hex} — click to remove`;
+        div.onclick = () => deleteColor(index);
+        row.appendChild(div);
+      });
+    }
+
+    function deleteColor(index) {
+      if (!confirm("Remove this color from the palette?")) return;
+      fetch(`/delete_color/${index}`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => updatePalette(data.palette));
+    }
+
+    function clearPalette() {
+      if (!confirm("Clear the entire palette?")) return;
+      fetch("/clear_palette", { method: "POST" })
+        .then(() => document.getElementById("palette-row").innerHTML = "");
+    }
+
+    function exportJPG() {
+      window.location.href = "/export/jpg";
+    }
+
+    function exportASE() {
+      window.location.href = "/export/ase";
+    }
+
+    // Load palette on page load
+    fetch("/palette")
+      .then(res => res.json())
+      .then(data => updatePalette(data));
+
+    // Initial color fetch
+    fetchColor();
+
+    // Generate QR code on page load
+    fetch("/server_url")
+      .then(res => res.json())
+      .then(data => {
+        const url = data.url;
+        new QRCode(document.getElementById("qr-container"), {
+          text: url,
+          width: 180,
+          height: 180,
+          colorDark: "#222222",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+        document.getElementById("qr-url").textContent = url;
+      });
+  </script>
+
+</body>
+</html>
