@@ -54,7 +54,7 @@
         We worked on the project in roughly six stages.
       </p>
       <p>
-        <b>Getting the sensor and OLED running:</b> The first step was just making sure the APDS-9999 and SSD1306 worked. We wired them up on a breadboard and used the Adafruit CircuitPython libraries to talk to them over I<sup>2</sup>C. Once both I<sup>2</sup>C devices were recognized, we utilized the PIL library to write text and upload an animated gif to the OLED screen to represent what state it was in. We then used the adafruit_apds9999 library to interact with the color sensor, setting the sensor to RGB mode and reading the values. Once we could read RGB values from the sensor in the terminal and draw to the OLED, we knew the basic hardware was working.
+        <b>Getting the sensor and OLED running:</b> The first step was just making sure the APDS-9999 and SSD1306 worked. We wired them up on a breadboard and used the Adafruit CircuitPython libraries to talk to them over I<sup>2</sup>C. Once both I<sup>2</sup>C devices were recognized, we utilized the PIL library to write text and upload an animated gif to the OLED screen to represent what state it was in. We then used the adafruit_apds9999 library to interact with the color sensor, setting the sensor to RGB mode and reading the values by assigning the property rgb_ir to the sensor object. Once we could read RGB values from the sensor in the terminal and draw to the OLED, we knew the basic hardware was working.
       </p>  
       <video controls muted class="center"  width="640px" height="360px">
         <source src="images/circuit_proto.mov" type="video/quicktime">
