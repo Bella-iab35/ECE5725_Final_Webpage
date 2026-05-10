@@ -56,9 +56,6 @@
       <p>
         <b>Getting the sensor and OLED running:</b> The first step was just making sure the APDS-9999 and SSD1306 worked. We wired them up on a breadboard and used the Adafruit CircuitPython libraries to talk to them over I<sup>2</sup>C. Once both I<sup>2</sup>C devices were recognized, we utilized the PIL library to write text and upload an animated gif to the OLED screen to represent what state it was in. We then used the adafruit_apds9999 library to interact with the color sensor, setting the sensor to RGB mode and reading the values by assigning the property rgb_ir to the sensor object. Once we could read RGB values from the sensor in the terminal and draw to the OLED, we knew the basic hardware was working.
       </p>  
-      <video controls muted class="center"  width="640px" height="360px">
-        <source src="images/circuit_proto.mov" type="video/quicktime">
-      </video>
       <p style="text-align:center;font-size:0.8em;">Video of the circuit prototype working</p>
       <p>
         <b>Bluetooth between the two Pis:</b> Once the pen-side hardware was solid, we needed to get the two Pis talking to each other. We used PyBluez and an RFCOMM socket on channel 1. We had to manually pair the two devices using bluetoothctl first, and we hardcoded the Pi 4's MAC address into the pen's script so it always connects to the same device. This step took longer than expected because we kept running into "address already in use" errors and "connection reset by peer" errors that turned out to be caused by old versions of the script still holding the Bluetooth port from a previous run. We fixed this by writing a clean restart procedure: kill any old processes, restart the Bluetooth service, then start fresh.
@@ -74,11 +71,6 @@
       </p>
       <img src="images/jpg_export.png">
       <p>Palette being exported as a JPG image</p>
-      <video controls muted class="center"  width="640px" height="360px">
-        <source src="images/ase.mov" type="video/quicktime">
-      </video>
-      <p style="text-align:center;font-size:0.8em;">An .ase file that was exported and sent to an iPad successfully is imported into Procreate.</p>
-      <p>  
         <b>Dashboard polish and final assembly:</b> Towards the end we focused on making the dashboard look clean. We designed a dark-themed UI with a custom font, sidebar palette layout, and a separate canvas page where users can draw with their saved palette colors. We added a QR code feature so audience phones could pull up the dashboard during the demo. The QR code initially didn't work outside the room because the Pi 4 was picking its public Cornell IP, which is firewalled. We fixed the IP detection function to prefer private network ranges (10.x, 172.x, 192.168.x) so the QR shows a reachable address. The pen shell went through three 3D print iterations and, with some final edits to the circuit, the pen was able to be assembled and work as intended minus the LED light strip and the funnel at the top.
       </p>
       <img src="images/final_pen.png">
