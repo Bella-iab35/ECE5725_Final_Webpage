@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+ <link rel="stylesheet" href="./style.css">
+ <link href="https://fonts.googleapis.com/css2?family=Honk&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<title>ECE 5725 Final Project</title>
+
+<body>
+    
+    <div class="topnav">
+      <a href="index.html">Introduction</a>
+      <a href="design.html">Design and Testing</a>
+      <a href="results.html">Results</a>
+      <a href="conclusions.html">Conclusions</a>
+      <a class="active" href="appendix.html">Appendix</a>
+    </div>
+
+<div class="top">
+    <h1>Appendix</h1>
+</div>
+
+<hr>
+
+<main>
+
+<div class="tab-wrap">
+
+    <!-- active tab on page load gets checked attribute -->
+    <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+    <label class="tab-label1" for="tab1">Parts List</label>
+
+    <input type="radio" id="tab2" name="tabGroup1" class="tab">
+    <label class="tab-label4" for="tab2">Code</label>
+
+    <input type="radio" id="tab3" name="tabGroup1" class="tab">
+    <label class="tab-label2" for="tab3">References</label>
+
+    <input type="radio" id="tab4" name="tabGroup1" class="tab">
+    <label class="tab-label3" for="tab4">Work Distribution</label>
+
+   <div class="tab__content">
+      <h2>List of Materials</h3>
+      <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>RaspberryPi 4 (4GB)</td>
+            <td>1</td>
+            <td>$55</td>
+        </tr>
+        <tr>
+            <td>RaspberryPi Zero 2W</td>
+            <td>1</td>
+            <td>$15</td>
+        </tr>   
+        <tr>
+            <td>APDS-9999 RGB Color Sensor</td>
+            <td>1</td>
+            <td>$7</td>
+        </tr>
+        <tr>
+            <td>SSD1306 OLED Display (128x64)</td>
+            <td>1</td>
+            <td>$8</td>
+        </tr>  
+        <tr>
+            <td>Momentary Push Button</td>
+            <td>1</td>
+            <td>$0.95</td>
+        </tr>  
+        <tr>
+            <td>Neutral White LED Strip</td>
+            <td>1</td>
+            <td>$9.90</td>
+        </tr>
+        <tr>
+          <td>Breadboard Power Module</td>
+          <td>1</td>
+          <td>$6</td>
+        </tr> 
+        <tr>
+          <td>Jumper Wires</td>
+          <td>~15</td>
+          <td>$2</td>
+        </tr>
+        <tr>
+          <td>PLA Filament</td>
+          <td>1 spool</td>
+          <td>$20</td>
+        </tr>       
+        <tr>
+            <td>Silver Spray Paint</td>
+            <td>1</td>
+            <td>$10</td>
+        </tr>
+        <tr>
+            <td>MicroSD Card (32GB)</td>
+            <td>1</td>
+            <td>$20</td>
+        </tr>          
+        <tr>
+            <td>MicroSD Card (16GB) + Adapter</td>
+            <td>1</td>
+            <td>$17</td>
+        </tr>          
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td>$175.85</td>
+        </tr>          
+      </table>
+    </div>  
+
+
+    <div class="tab__content">
+        <h2>Code</h2>
+        <p>All source code is available at our project repository.
+        The main files are:
+        </p>
+        <ul>
+           <li> app.py: Flask backend running on the Pi 4. Includes the Bluetooth listener thread, all color math functions, palette storage, JPG and ASE export logic, and the REST API.
+           <li> color_scan.py: Pen-side script running on the Pi Zero 2W. Handles the button input, OLED animation, sensor reading, calibration, and Bluetooth client.
+           <li> templates/index.html: Dashboard UI.
+           <li> static/css/style.css : Dashboard styling.
+           <li> colorname.json: Color name database.
+        </ul>
+    </div>
+
+    <div class="tab__content">
+       <h2>References</h2>
+       <ul>
+        <li><a href="https://github.com/meodai/color-names">meodai/color-names: open source color name database.</a></li>
+        <li><a href="https://www.selapa.net/swatches/colors/fileformats.php">Adobe Swatch Exchange (ASE) format specification.</a></li>
+        <li><a href="https://github.com/adafruit/Adafruit_CircuitPython_APDS9960">Adafruit CircuitPython APDS9960/APDS9999 driver library.</a></li>
+        <li><a href="https://github.com/adafruit/Adafruit_CircuitPython_SSD1306">Adafruit SSD1306 driver library.</a></li>
+        <li><a href="https://github.com/pybluez/pybluez">PyBluez Python Bluetooth library.</a></li>
+        <li><a href="https://flask.palletsprojects.com/">Flask web framework documentation.</a></li>
+        <li><a href="https://pillow.readthedocs.io/">Pillow (PIL Fork) imaging library.</a></li>
+        <li>ITU-R BT.601 standard for luma coefficients</li>
+        <li>ECE 5725 lecture notes on Bluetooth and I<sup>2</sup>C</li>
+        <li>AI tools used: Ayushi used Claude (Anthropic) for code review, debugging, and report drafting. Bella used VS Code's Local Agent to reformat the color-names json file and Google's AI overview when searching for solutions to hardware and programming issues. </li>
+       </ul>
+    </div>
+
+    <div class="tab__content">
+        <h2>Work Distribution</h2>
+        <p>
+        Bella designed and 3D-printed the pen shell across three iterations using Fusion 360. She wired the breadboard prototype and the final pen assembly, including the APDS-9999 sensor, SSD1306 OLED, push button, and white LED strip. She wrote the color sensor code (minus calibration), the OLED display animation code, and the pen-side state machine that handles transitions between idle, scanning, and end states. On the dashboard side, she designed the dark-themed UI, picked and integrated the custom Londrina font, built the sidebar palette layout, the canvas drawing modal, and the edit-color modal. She also painted the final pen shell.
+        </p>
+        <p>
+        Ayushi built the Pi 4 backend in Flask, including the REST API endpoints for color updates, palette management, and exports. She implemented the Bluetooth server as a daemon thread with reconnection handling. She wrote the color math library: RGB to hex, RGB to CMYK, RGB to HSL, complementary and analogous color computation, and the closest-color-name lookup using Euclidean distance against the 30,000-entry database. She implemented the JPG export using Pillow and the ASE export by writing Adobe's binary format directly with struct.pack. She added the QR code feature and fixed the IP detection logic to handle Cornell's network configuration. She also performed the sensor calibration work to derive the white-balance weights and the saturation transform.
+        </p>
+        <p>
+        Both team members shared integration debugging, Bluetooth pairing, network configuration, and end-to-end testing. The final demo preparation was a joint effort.
+        </p>
+    </div>
+</div>
+
+</main>
+
+</body>
+
+</html>
