@@ -27,7 +27,6 @@ h2, label{
   font-family: Sketch;
 }
 
-/* Add a black background color to the top navigation */
 .topnav {
   background-color: rgb(50,50,50);
   overflow: hidden;
@@ -78,11 +77,19 @@ h2, label{
     border: 10px solid burlywood;
 }
 
+.conclusions .results{
+  max-width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* Tab logic for design and appendix pages */
 .tab-wrap {
   transition: 0.3s box-shadow ease;
   border-radius: 6px;
-  max-width: 100%;
+  max-width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -231,7 +238,7 @@ h2, label{
   display: block;
 }
 
-.tab__content img, .tab__content video, .tab__content iframe{
+.tab__content img, .tab__content iframe{
   display: block;  /* Video elements are inline by default */
   margin: 0 auto;
   border: 2px dashed rgb(120,120,120);
@@ -265,15 +272,8 @@ img {
 
 html {
   height: 100%;
+  width: 100%;
 }
 
-em {
-  text-align: center;
-  padding-bottom: 10px;
-}
 
-.desctree {
-  width:75%;
-  height: auto;
-}
 
